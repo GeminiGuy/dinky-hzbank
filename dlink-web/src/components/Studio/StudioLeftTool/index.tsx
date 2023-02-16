@@ -39,13 +39,13 @@ const StudioLeftTool = (props: any) => {
       <TabPane tab={<span><BarsOutlined/> {l('pages.datastudio.label.directory')}</span>} key="StudioTree">
         <StudioTree/>
       </TabPane>
-      <TabPane tab={<span><InsertRowAboveOutlined/> {l('pages.datastudio.label.structure')}</span>}
+      {/* <TabPane tab={<span><InsertRowAboveOutlined/> {l('pages.datastudio.label.structure')}</span>}
                key="MetaStore">
         <StudioMetaStore/>
       </TabPane>
       <TabPane tab={<span><MessageOutlined/> {l('pages.datastudio.label.session')}</span>} key="Connectors">
         <StudioConnector/>
-      </TabPane>
+      </TabPane> */}
       {/*<TabPane tab={<span><ClusterOutlined/> {l('pages.datastudio.label.cluster')}</span>} key="Cluster">*/}
       {/*  <StudioCluster/>*/}
       {/*</TabPane>*/}

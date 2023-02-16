@@ -56,17 +56,23 @@ export default [
     footerRender: false,
     component: './DataStudio',
   },
-  // {
-  //   path: '/devops',
-  //   name: 'devops',
-  //   icon: 'control',
-  //   component: './DevOps',
-  // },
+  {
+    path: '/devops',
+    name: 'devops',
+    icon: 'control',
+    component: './DevOps',
+  },
   {
     path: '/job',
     name: 'job',
     component: './DevOps/JobInfo',
     hideInMenu: true,
+  },
+  {
+    path: '/datacenter',
+    name: 'datacenter',
+    icon: 'database',
+    component: './DataCenter',
   },
   // {
   //   path: '/datacenter',
@@ -86,17 +92,23 @@ export default [
   //   ],
   // },
 
+  // {
+  //   path: '/clusterInstance',
+  //   name: 'clusterInstance',
+  //   icon: 'code-sandbox',
+  //   component: './RegistrationCenter/ClusterManage/Cluster',
+  // },
+  // {
+  //   path: '/clusterConfiguration',
+  //   name: 'clusterConfiguration',
+  //   icon: 'cluster',
+  //   component: './RegistrationCenter/ClusterManage/ClusterConfiguration',
+  // },
   {
-    path: '/clusterInstance',
-    name: 'clusterInstance',
-    icon: 'code-sandbox',
-    component: './RegistrationCenter/ClusterManage/Cluster',
-  },
-  {
-    path: '/clusterConfiguration',
-    name: 'clusterConfiguration',
-    icon: 'cluster',
-    component: './RegistrationCenter/ClusterManage/ClusterConfiguration',
+    path: '/registration',
+    name: 'registration',
+    icon: 'appstore',
+    component: './RegistrationCenter/ClusterManage',
   },
   // {
   //   path: '/registration',

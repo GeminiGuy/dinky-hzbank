@@ -5,10 +5,6 @@ import ClusterTableList from './Cluster';
 import ClusterConfigurationTableList from './ClusterConfiguration';
 import {l} from "@/utils/intl";
 
-const onChange = (key: string) => {
-  console.log(key);
-};
-
 const items: TabsProps['items'] = [
   {
     key: '1',
@@ -22,6 +18,6 @@ const items: TabsProps['items'] = [
   },
 ];
 
-const ClusterManage: React.FC = () => <Tabs defaultActiveKey="1" items={items} onChange={onChange} />;
+const ClusterManage: React.FC = () => <Tabs style={{marginTop: '-24px'}} defaultActiveKey="1" items={items} />;
 
 export default ClusterManage;

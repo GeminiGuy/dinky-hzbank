@@ -8,13 +8,13 @@ import {l} from "@/utils/intl";
 const items: TabsProps['items'] = [
   {
     key: '1',
-    label: l('menu.datacenter.metadata'),
-    children: <MetaDataContainer />,
+    label: l('menu.registration.database'),
+    children: <DataBaseTableList />,
   },
   {
     key: '2',
-    label: l('menu.registration.database'),
-    children: <DataBaseTableList />,
+    label: l('menu.datacenter.metadata'),
+    children: <MetaDataContainer />,
   },
 ];
 

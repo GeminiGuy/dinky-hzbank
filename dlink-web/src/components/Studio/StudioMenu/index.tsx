@@ -655,7 +655,7 @@ const StudioMenu = (props: any) => {
                   />
                 </Tooltip>
               </>)}
-              {isShowSubmitBtn() && (<>
+              {/* {isShowSubmitBtn() && (<>
                 <Tooltip title={l('pages.datastudio.editor.push.ds')}>
                   <Button
                     type="text" style={{color: '#248FFF'}}
@@ -663,7 +663,7 @@ const StudioMenu = (props: any) => {
                     onClick={viewDolphinCon}
                   />
                 </Tooltip>
-              </>)}
+              </>)} */}
               {isShowCancelTaskBtn() &&
                 <Tooltip title={l('pages.datastudio.editor.stop')}>
                   <Button

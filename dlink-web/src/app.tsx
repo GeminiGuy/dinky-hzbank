@@ -23,7 +23,7 @@ import {PageLoading} from '@ant-design/pro-layout';
 import {notification} from 'antd';
 import type {RequestConfig, RunTimeLayoutConfig} from 'umi';
 import {getIntl, getLocale, history, Link} from 'umi';
-import RightContent from '@/components/RightContent';
+// import RightContent from '@/components/RightContent';
 // import Footer from '@/components/Footer';
 import type {ResponseError} from 'umi-request';
 import {currentUser as queryCurrentUser} from './services/ant-design-pro/api';
@@ -144,7 +144,8 @@ export const layout: RunTimeLayoutConfig = ({initialState}) => {
 
 
   return {
-    rightContentRender: () => <RightContent/>,
+    // rightContentRender: () => <RightContent/>,
+    rightContentRender: () => {},
     disableContentMargin: false,
     /*waterMarkProps: {
       content: initialState?.currentUser?.name,

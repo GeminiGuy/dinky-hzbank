@@ -84,6 +84,7 @@ const Login: React.FC = () => {
 
   // iframe接收父消息回调
   const iframeMessageCallback = (e: any) => {  
+    // TODO
     if (e.source != window.parent || !e.data.isWhitelist) return;
     const userParams = {
       autoLogin: true,
@@ -96,6 +97,8 @@ const Login: React.FC = () => {
   useEffect(() => {
     // iframe接收父消息
     window.addEventListener('message', iframeMessageCallback, false);
+    // TODO
+    window.parent.postMessage(true, '*');
     return () => {
       window.removeEventListener('message', iframeMessageCallback)
     }

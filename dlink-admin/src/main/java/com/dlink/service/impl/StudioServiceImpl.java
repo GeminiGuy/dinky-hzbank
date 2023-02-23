@@ -221,7 +221,7 @@ public class StudioServiceImpl implements StudioService {
             return result;
         }
         JdbcSelectResult selectResult;
-        try (Driver driver = Driver.build(dataBase.getDriverConfig())) {
+        try (Driver driver = Driver.build(dataBase.buildDriverConfig())) {
             process.infoSuccess();
             process.start();
             selectResult = driver.executeSql(sqlDTO.getStatement(), sqlDTO.getMaxRowNum());
@@ -291,7 +291,7 @@ public class StudioServiceImpl implements StudioService {
             return Collections.singletonList(
                     SqlExplainResult.fail(studioExecuteDTO.getStatement(), "The database does not exist."));
         }
-        try (Driver driver = Driver.build(dataBase.getDriverConfig())) {
+        try (Driver driver = Driver.build(dataBase.buildDriverConfig())) {
             process.infoSuccess();
             process.start();
             List<SqlExplainResult> explain = driver.explain(studioExecuteDTO.getStatement());
@@ -379,10 +379,10 @@ public class StudioServiceImpl implements StudioService {
             }
             if (studioCADTO.getDialect().equalsIgnoreCase("doris")) {
                 return com.dlink.explainer.sqllineage.LineageBuilder.getSqlLineage(studioCADTO.getStatement(), "mysql",
-                        dataBase.getDriverConfig());
+                        dataBase.buildDriverConfig());
             } else {
                 return com.dlink.explainer.sqllineage.LineageBuilder.getSqlLineage(studioCADTO.getStatement(),
-                        studioCADTO.getDialect().toLowerCase(), dataBase.getDriverConfig());
+                        studioCADTO.getDialect().toLowerCase(), dataBase.buildDriverConfig());
             }
         } else {
             addFlinkSQLEnv(studioCADTO);
@@ -469,7 +469,7 @@ public class StudioServiceImpl implements StudioService {
             DataBase dataBase = dataBaseService.getById(studioMetaStoreDTO.getDatabaseId());
             if (!Asserts.isNull(dataBase)) {
                 Catalog defaultCatalog = Catalog.build(FlinkQuery.defaultCatalog());
-                Driver driver = Driver.build(dataBase.getDriverConfig());
+                Driver driver = Driver.build(dataBase.buildDriverConfig());
                 defaultCatalog.setSchemas(driver.listSchemas());
                 catalogs.add(defaultCatalog);
             }
@@ -512,7 +512,7 @@ public class StudioServiceImpl implements StudioService {
         if (Dialect.notFlinkSql(studioMetaStoreDTO.getDialect())) {
             DataBase dataBase = dataBaseService.getById(studioMetaStoreDTO.getDatabaseId());
             if (Asserts.isNotNull(dataBase)) {
-                Driver driver = Driver.build(dataBase.getDriverConfig());
+                Driver driver = Driver.build(dataBase.buildDriverConfig());
                 tables.addAll(driver.listTables(studioMetaStoreDTO.getDatabase()));
             }
         } else {

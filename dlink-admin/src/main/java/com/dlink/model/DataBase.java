@@ -28,6 +28,8 @@ import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 
+import com.dlink.process.exception.DinkyException;
+import com.dlink.utils.RSAUtils;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -73,7 +75,17 @@ public class DataBase extends SuperEntity {
 
     private LocalDateTime heartbeatTime;
 
-    public DriverConfig getDriverConfig() {
-        return new DriverConfig(getName(), type, url, username, password);
+    /**
+     * 原方法名以get开头，导致加载对象时该方法被序列化
+     */
+    public DriverConfig buildDriverConfig() {
+        // 将此处的密码解密
+        String decryptPassword;
+        try {
+            decryptPassword = RSAUtils.decryptStr(password);
+        } catch (Exception e) {
+            throw new DinkyException("数据库密码解析失败");
+        }
+        return new DriverConfig(getName(), type, url, username, decryptPassword);
     }
 }

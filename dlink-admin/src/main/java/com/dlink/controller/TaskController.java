@@ -145,7 +145,7 @@ public class TaskController {
      */
     @GetMapping
     public Result getOneById(@RequestParam Integer id) {
-        Task task = taskService.getTaskInfoById(id);
+        Task task = taskService.getOriginalTaskInfoById(id);
         return Result.succeed(task, "获取成功");
     }
 

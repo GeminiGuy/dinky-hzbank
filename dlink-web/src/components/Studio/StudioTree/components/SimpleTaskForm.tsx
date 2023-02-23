@@ -25,6 +25,10 @@ import type {TaskTableListItem} from '../data.d';
 import {DIALECT} from "@/components/Studio/conf";
 import {l} from "@/utils/intl";
 import {postAll} from "@/components/Common/crud";
+import {JOB_LIFE_CYCLE} from "@/components/Common/JobLifeCycle";
+import {Dispatch} from "@@/plugin-dva/connect";
+import {StateType} from "@/pages/DataStudio/model";
+import {connect} from "umi";
 
 const {Option} = Select;
 
@@ -46,7 +50,7 @@ const isUDF = (dialect: string) => {
   return (dialect == DIALECT.SCALA || dialect == DIALECT.PYTHON || dialect == DIALECT.JAVA)
 }
 
-const SimpleTaskForm: React.FC<UpdateFormProps> = (props) => {
+const SimpleTaskForm: React.FC<any> = (props) => {
 
 
   const [formVals, setFormVals] = useState<Partial<TaskTableListItem>>({
@@ -78,6 +82,7 @@ const SimpleTaskForm: React.FC<UpdateFormProps> = (props) => {
     updateModalVisible,
     values,
     isCreate,
+    current,
   } = props;
 
 
@@ -93,6 +98,7 @@ const SimpleTaskForm: React.FC<UpdateFormProps> = (props) => {
     }
     setFormVals(data);
     handleUpdate(data);
+    isCreate && props.changeTaskStep(current.task.id, JOB_LIFE_CYCLE.DEVELOP);
   };
   const handlerChangeUdf = (value: any[]) => {
     if (value[1] == 0) {
@@ -217,4 +223,15 @@ const SimpleTaskForm: React.FC<UpdateFormProps> = (props) => {
   );
 };
 
-export default SimpleTaskForm;
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  changeTaskStep: (id: number, step: number) => dispatch({
+    type: "Studio/changeTaskStep",
+    payload: {
+      id, step
+    },
+  })
+});
+
+export default connect(({Studio}: { Studio: StateType }) => ({
+  current: Studio.current,
+}), mapDispatchToProps)(SimpleTaskForm);

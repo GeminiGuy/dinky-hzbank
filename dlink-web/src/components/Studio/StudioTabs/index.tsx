@@ -150,8 +150,8 @@ const EditorTabs = (props: any) => {
 
   return (
     <>
-      {/* {tabs.panes.length === 0 ? <StudioHome width={width}/> : */}
-      {tabs.panes.length === 0 ? <Empty image={Empty.PRESENTED_IMAGE_SIMPLE}/> :
+      {/* {tabs.panes.length === 0 ? <Empty image={Empty.PRESENTED_IMAGE_SIMPLE}/> : */}
+      {tabs.panes.length === 0 ? <StudioHome width={width}/> :
       <Tabs
           hideAdd
           type="editable-card"

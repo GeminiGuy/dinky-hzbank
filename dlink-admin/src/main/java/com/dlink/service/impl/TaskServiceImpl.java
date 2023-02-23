@@ -103,6 +103,7 @@ import com.dlink.service.TaskService;
 import com.dlink.service.TaskVersionService;
 import com.dlink.service.UDFService;
 import com.dlink.service.UDFTemplateService;
+import com.dlink.utils.DesensitizeUtils;
 import com.dlink.utils.DockerClientUtils;
 import com.dlink.utils.JSONUtil;
 import com.dlink.utils.UDFUtils;
@@ -407,7 +408,9 @@ public class TaskServiceImpl extends SuperServiceImpl<TaskMapper, Task> implemen
                 }
             }
             if (statement != null) {
-                task.setStatement(statement.getStatement());
+                // 对脱敏的数据进行还原处理
+                String originalData = DesensitizeUtils.replaceEncryptStr(statement.getStatement());
+                task.setStatement(originalData);
             }
             JobInstance jobInstance = jobInstanceService.getJobInstanceByTaskId(id);
             if (Asserts.isNotNull(jobInstance) && !JobStatus.isDone(jobInstance.getStatus())) {

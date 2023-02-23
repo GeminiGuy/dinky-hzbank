@@ -68,6 +68,15 @@ public class RSAUtils {
         System.out.println("字符串2加密后：" + encryptStr2);
         System.out.println("字符串2解密后：" + decryptStr2);
 
+        String data3 = "123456";
+        RSA publicRSA3 = new RSA(null, currentPublicKeyStr);
+        String encryptStr3 = publicRSA3.encryptBase64(data3, KeyType.PublicKey);
+        RSA privateRSA3 = new RSA(currentPrivateKeyStr, null);
+        String decryptStr3 = privateRSA3.decryptStr(encryptStr3, KeyType.PrivateKey);
+        // 输出测试加解密结果
+        System.out.println("字符串3加密后：" + encryptStr3);
+        System.out.println("字符串3解密后：" + decryptStr3);
+
     }
 
 }

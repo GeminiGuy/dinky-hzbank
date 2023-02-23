@@ -28,9 +28,46 @@ import {getIntl, getLocale, history, Link} from 'umi';
 import type {ResponseError} from 'umi-request';
 import {currentUser as queryCurrentUser} from './services/ant-design-pro/api';
 import {BookOutlined, LinkOutlined} from '@ant-design/icons';
+import {login} from '@/services/ant-design-pro/api';
+import {message} from 'antd';
+import {useEffect, useState} from 'react';
+import {l} from "@/utils/intl";
 
 const isDev = process.env.NODE_ENV === 'development';
 const loginPath = '/user/login';
+// TODO: 生产环境地址未明确(后面的*)
+const parentPath: string = isDev ? '*' : '*'
+
+const whitelistFreeLogin = async (values: API.LoginParams) => {
+  try {
+    // 登录
+    const msg = await login({...values, type: 'password'});
+    if (msg.code === 0 && msg.datas != undefined) {
+      history.push('/');
+      return;
+    } else {
+      message.error(l(msg.msg, msg.msg));
+    }
+  } catch (error) {
+    message.error(l('pages.login.failure'));
+  }
+}
+
+// iframe接收父消息回调
+const iframeMessageCallback = (e: any) => {  
+  if (!e.origin.startsWith(parentPath) || !e.data.isWhitelist) return;
+  const userParams = {
+    autoLogin: true,
+    username: e.data.username,
+    password: e.data.password,
+  }
+  whitelistFreeLogin(userParams)
+}
+
+// iframe接收父消息
+window.addEventListener('message', iframeMessageCallback, false);
+window.parent.postMessage(true, parentPath);
+
 
 /** 获取用户信息比较慢的时候会展示一个 loading */
 export const initialStateConfig = {

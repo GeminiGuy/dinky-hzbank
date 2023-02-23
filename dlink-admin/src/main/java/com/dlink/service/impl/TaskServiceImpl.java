@@ -423,6 +423,31 @@ public class TaskServiceImpl extends SuperServiceImpl<TaskMapper, Task> implemen
     }
 
     @Override
+    public Task getOriginalTaskInfoById(Integer id) {
+        Task task = this.getById(id);
+        if (task != null) {
+            task.parseConfig();
+            Statement statement = statementService.getById(id);
+            if (task.getClusterId() != null) {
+                Cluster cluster = clusterService.getById(task.getClusterId());
+                if (cluster != null) {
+                    task.setClusterName(cluster.getAlias());
+                }
+            }
+            if (statement != null) {
+                task.setStatement(statement.getStatement());
+            }
+            JobInstance jobInstance = jobInstanceService.getJobInstanceByTaskId(id);
+            if (Asserts.isNotNull(jobInstance) && !JobStatus.isDone(jobInstance.getStatus())) {
+                task.setJobInstanceId(jobInstance.getId());
+            } else {
+                task.setJobInstanceId(0);
+            }
+        }
+        return task;
+    }
+
+    @Override
     public void initTenantByTaskId(Integer id) {
         Integer tenantId = baseMapper.getTenantByTaskId(id);
         Asserts.checkNull(tenantId, Tips.TASK_NOT_EXIST);
@@ -571,7 +596,7 @@ public class TaskServiceImpl extends SuperServiceImpl<TaskMapper, Task> implemen
 
     @Override
     public String exportSql(Integer id) {
-        Task task = getTaskInfoById(id);
+        Task task = getOriginalTaskInfoById(id);
         Asserts.checkNull(task, Tips.TASK_NOT_EXIST);
         if (Dialect.notFlinkSql(task.getDialect())) {
             return task.getStatement();

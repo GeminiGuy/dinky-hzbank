@@ -55,6 +55,8 @@ public interface TaskService extends ISuperService<Task> {
 
     Task getTaskInfoById(Integer id);
 
+    Task getOriginalTaskInfoById(Integer id);
+
     void initTenantByTaskId(Integer id);
 
     boolean saveOrUpdateTask(Task task);

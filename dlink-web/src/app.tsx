@@ -30,7 +30,6 @@ import {currentUser as queryCurrentUser} from './services/ant-design-pro/api';
 import {BookOutlined, LinkOutlined} from '@ant-design/icons';
 import {login} from '@/services/ant-design-pro/api';
 import {message} from 'antd';
-import {useEffect, useState} from 'react';
 import {l} from "@/utils/intl";
 
 const isDev = process.env.NODE_ENV === 'development';
@@ -63,10 +62,6 @@ const iframeMessageCallback = (e: any) => {
   }
   whitelistFreeLogin(userParams)
 }
-
-// iframe接收父消息
-window.addEventListener('message', iframeMessageCallback, false);
-window.parent.postMessage(true, parentPath);
 
 
 /** 获取用户信息比较慢的时候会展示一个 loading */
@@ -178,7 +173,9 @@ export const request: RequestConfig = {
 
 // ProLayout 支持的api https://procomponents.ant.design/components/layout
 export const layout: RunTimeLayoutConfig = ({initialState}) => {
-
+  // iframe接收父消息
+  window.addEventListener('message', iframeMessageCallback, false);
+  window.parent.postMessage(true, parentPath);
 
   return {
     // rightContentRender: () => <RightContent/>,

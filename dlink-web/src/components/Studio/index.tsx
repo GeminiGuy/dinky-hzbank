@@ -127,7 +127,7 @@ const Studio = (props: any) => {
               containerHeight={toolHeight}
               min={VIEW.leftMargin + VIEW.midMargin}
               max={size.width - VIEW.rightMargin}
-              initLeftWidth={size.width - toolRightWidth}
+              initRightWidth={toolRightWidth}
               isLeft={false}
               handler={
                 <div
@@ -174,6 +174,11 @@ const Studio = (props: any) => {
           </Row>
           <Row>
             <Col span={24}>
+              {/* TODO: 数据开发->底部控制台白色区域高度
+                size.height: html高度
+                toolHeight(中间区域高度): 400
+                VIEW.marginTop(顶部导航+guide Page高度): 84
+              */}
               <StudioConsole height={size.height - toolHeight - VIEW.marginTop}/>
             </Col>
           </Row>

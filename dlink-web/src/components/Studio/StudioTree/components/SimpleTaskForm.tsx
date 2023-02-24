@@ -88,6 +88,7 @@ const SimpleTaskForm: React.FC<any> = (props) => {
 
   const submitForm = async () => {
     const fieldsValue = await form.validateFields();
+    isCreate && props.changeTaskStep(current.task.id, JOB_LIFE_CYCLE.DEVELOP);
     const data = {...formVals, ...fieldsValue};
     try {
       data.config = {
@@ -98,7 +99,6 @@ const SimpleTaskForm: React.FC<any> = (props) => {
     }
     setFormVals(data);
     handleUpdate(data);
-    isCreate && props.changeTaskStep(current.task.id, JOB_LIFE_CYCLE.DEVELOP);
   };
   const handlerChangeUdf = (value: any[]) => {
     if (value[1] == 0) {

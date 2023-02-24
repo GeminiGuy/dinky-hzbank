@@ -31,6 +31,7 @@ function DraggleLayout({
                          containerWidth = 0, // 容器宽度
                          containerHeight = 0, // 容器高度
                          initLeftWidth = 0, // 初始左侧容器宽度
+                         initRightWidth = 0,
                          handler = null, // 拖拽器
                          isLeft = true, // 拖拽器
                          onWidthChange = width => width, // 左侧容器高度变化
@@ -82,7 +83,7 @@ function DraggleLayout({
       className={styles.root}
       style={{width: containerWidth, height: containerHeight}}
     >
-      <div className={styles.left} style={{width: position.x}}>
+      <div className={styles.left} style={{width: initRightWidth ? containerWidth - initRightWidth : position.x}}>
         {children[0]}
 
         <div className={styles.handler} {...props}>
@@ -91,7 +92,7 @@ function DraggleLayout({
       </div>
       <div
         className={styles.right}
-        style={{width: containerWidth - position.x}}
+        style={{width: initRightWidth || containerWidth - position.x}}
       >
         {children[1]}
       </div>

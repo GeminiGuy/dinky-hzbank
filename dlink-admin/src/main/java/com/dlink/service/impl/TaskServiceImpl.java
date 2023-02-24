@@ -632,7 +632,6 @@ public class TaskServiceImpl extends SuperServiceImpl<TaskMapper, Task> implemen
 
     @Override
     public Result releaseTask(Integer id) {
-
         Task task = getTaskInfoById(id);
         Assert.check(task);
         if (JobLifeCycle.DEVELOP.equalsValue(task.getStep())) {
@@ -645,6 +644,7 @@ public class TaskServiceImpl extends SuperServiceImpl<TaskMapper, Task> implemen
                     }
                 }
             }
+            task = getOriginalTaskInfoById(id);// 保留原始配置
             task.setStep(JobLifeCycle.RELEASE.getValue());
             Task newTask = createTaskVersionSnapshot(task);
             if (updateById(newTask)) {

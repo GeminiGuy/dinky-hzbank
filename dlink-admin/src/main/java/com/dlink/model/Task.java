@@ -102,6 +102,9 @@ public class Task extends SuperEntity {
     private String statement;
 
     @TableField(exist = false)
+    private String originalStatement;
+
+    @TableField(exist = false)
     private String clusterName;
 
     @TableField(exist = false)

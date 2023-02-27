@@ -408,6 +408,8 @@ public class TaskServiceImpl extends SuperServiceImpl<TaskMapper, Task> implemen
                 }
             }
             if (statement != null) {
+                task.setOriginalStatement(statement.getStatement());
+
                 // 对脱敏的数据进行还原处理
                 String originalData = DesensitizeUtils.replaceEncryptStr(statement.getStatement());
                 task.setStatement(originalData);

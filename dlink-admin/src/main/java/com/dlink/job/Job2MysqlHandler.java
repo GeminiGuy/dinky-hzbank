@@ -40,6 +40,7 @@ import com.dlink.service.TaskService;
 import com.dlink.utils.JSONUtil;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 import org.springframework.context.annotation.DependsOn;
 
@@ -85,7 +86,14 @@ public class Job2MysqlHandler implements JobHandler {
         history.setJobName(job.getJobConfig().getJobName());
         history.setSession(job.getJobConfig().getSession());
         history.setStatus(job.getStatus().ordinal());
-        history.setStatement(job.getStatement());
+
+        String statement = job.getStatement();
+        Integer taskId = job.getJobConfig().getTaskId();
+        if (Objects.nonNull(taskId)) {
+            Task originalTask = taskService.getTaskInfoById(taskId);
+            statement = originalTask.getOriginalStatement();
+        }
+        history.setStatement(statement);
         history.setStartTime(job.getStartTime());
         history.setTaskId(job.getJobConfig().getTaskId());
         history.setConfigJson(JSONUtil.toJsonString(job.getJobConfig()));

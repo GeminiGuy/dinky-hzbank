@@ -29,39 +29,12 @@ import type {ResponseError} from 'umi-request';
 import {currentUser as queryCurrentUser} from './services/ant-design-pro/api';
 import {BookOutlined, LinkOutlined} from '@ant-design/icons';
 import {login} from '@/services/ant-design-pro/api';
-import {message} from 'antd';
-import {l} from "@/utils/intl";
+// import {message} from 'antd';
+import {decryptDES} from '@/utils/des'
+// import {l} from "@/utils/intl";
 
 const isDev = process.env.NODE_ENV === 'development';
 const loginPath = '/user/login';
-// TODO: 生产环境地址未明确(后面的*)
-const parentPath: string = isDev ? '*' : '*'
-
-const whitelistFreeLogin = async (values: API.LoginParams) => {
-  try {
-    // 登录
-    const msg = await login({...values, type: 'password'});
-    if (msg.code === 0 && msg.datas != undefined) {
-      history.push('/');
-      return;
-    } else {
-      message.error(l(msg.msg, msg.msg));
-    }
-  } catch (error) {
-    message.error(l('pages.login.failure'));
-  }
-}
-
-// iframe接收父消息回调
-const iframeMessageCallback = (e: any) => {  
-  if (!e.origin.startsWith(parentPath) || !e.data.isWhitelist) return;
-  const userParams = {
-    autoLogin: true,
-    username: e.data.username,
-    password: e.data.password,
-  }
-  whitelistFreeLogin(userParams)
-}
 
 
 /** 获取用户信息比较慢的时候会展示一个 loading */
@@ -105,7 +78,27 @@ export async function getInitialState(): Promise<{
   };
   // 如果是登录页面，不执行
   if (history.location.pathname !== loginPath) {
-    const currentUser = await fetchUserInfo();
+    const {query} = history.location;
+    console.log('query字符串', query);
+    let currentUser
+    if (query && query.u && query.p) {
+      const userParams = {
+        autoLogin: true,
+        username: query.u.toString(),
+        password: decryptDES(query.p.toString()),
+      }
+      try {
+        // 登录
+        const msg = await login({...userParams, type: 'password'});
+        if (msg.code === 0 && msg.datas != undefined) {
+          currentUser = await fetchUserInfo();
+        }
+      } catch (error) {
+        history.push(loginPath);
+      }
+    } else {
+      currentUser = await fetchUserInfo();
+    }
     return {
       fetchUserInfo,
       currentUser,
@@ -173,9 +166,6 @@ export const request: RequestConfig = {
 
 // ProLayout 支持的api https://procomponents.ant.design/components/layout
 export const layout: RunTimeLayoutConfig = ({initialState}) => {
-  // iframe接收父消息
-  window.addEventListener('message', iframeMessageCallback, false);
-  window.parent.postMessage(true, parentPath);
 
   return {
     // rightContentRender: () => <RightContent/>,

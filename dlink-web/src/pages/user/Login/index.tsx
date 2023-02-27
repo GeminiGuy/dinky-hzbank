@@ -32,6 +32,9 @@ import {l} from "@/utils/intl";
 import cookies from "js-cookie";
 import {setLocale} from "@@/plugin-locale/localeExports";
 
+// const isDev = process.env.NODE_ENV === 'development';
+// // TODO: 生产环境地址未明确(后面的*)
+// const parentPath: string = isDev ? '*' : '*'
 
 /** 此方法会跳转到 redirect 参数所在的位置 */
 const goto = () => {
@@ -84,8 +87,7 @@ const Login: React.FC = () => {
 
   // // iframe接收父消息回调
   // const iframeMessageCallback = (e: any) => {  
-  //   // TODO
-  //   // if (!e.origin.startsWith('') || !e.data.isWhitelist) return;
+  //   // if (!e.origin.startsWith(parentPath) || !e.data.isWhitelist) return;
   //   if (e.source != window.parent || !e.data.isWhitelist) return;
   //   const userParams = {
   //     autoLogin: true,
@@ -98,8 +100,7 @@ const Login: React.FC = () => {
   // useEffect(() => {
   //   // iframe接收父消息
   //   window.addEventListener('message', iframeMessageCallback, false);
-  //   // TODO
-  //   window.parent.postMessage(true, '*');
+  //   window.parent.postMessage(true, parentPath);
   //   return () => {
   //     window.removeEventListener('message', iframeMessageCallback)
   //   }
@@ -234,7 +235,6 @@ const Login: React.FC = () => {
             }}
             submitter={{
               searchConfig: {
-                // TODO: 登录
                 submitText: l('pages.login.submit'),
               },
               render: (_, dom) => dom.pop(),

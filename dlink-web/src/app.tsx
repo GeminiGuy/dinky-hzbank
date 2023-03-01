@@ -79,7 +79,6 @@ export async function getInitialState(): Promise<{
   // 如果是登录页面，不执行
   if (history.location.pathname !== loginPath) {
     const {query} = history.location;
-    console.log('query字符串', query);
     let currentUser
     if (query && query.u && query.p) {
       const userParams = {

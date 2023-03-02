@@ -43,7 +43,6 @@ import {
 import DraggleLayout from "@/components/DraggleLayout";
 import DraggleVerticalLayout from "@/components/DraggleLayout/DraggleVerticalLayout";
 import {loadSettings} from "@/pages/SettingCenter/FlinkSettings/function";
-import {l} from "@/utils/intl";
 
 const Studio = (props: any) => {
 

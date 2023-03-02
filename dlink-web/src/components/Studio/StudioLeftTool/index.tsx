@@ -19,13 +19,14 @@
 
 
 import {Tabs} from "antd";
-import {AppstoreOutlined, BarsOutlined, InsertRowAboveOutlined, MessageOutlined} from "@ant-design/icons";
+// import {AppstoreOutlined, BarsOutlined, InsertRowAboveOutlined, MessageOutlined} from "@ant-design/icons";
+import {AppstoreOutlined, BarsOutlined} from "@ant-design/icons";
 import {StateType} from "@/pages/DataStudio/model";
 import {connect} from "umi";
 import StudioTree from "../StudioTree";
-import StudioConnector from "./StudioConnector";
+// import StudioConnector from "./StudioConnector";
 import StudioMetaData from "./StudioMetaData";
-import StudioMetaStore from "./StudioMetaStore";
+// import StudioMetaStore from "./StudioMetaStore";
 import {l} from "@/utils/intl";
 
 const {TabPane} = Tabs;

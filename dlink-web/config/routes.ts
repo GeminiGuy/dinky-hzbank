@@ -72,174 +72,192 @@ export default [
     path: '/datacenter',
     name: 'datacenter',
     icon: 'database',
-    routes: [
-      {
-        path: '/datacenter',
-        redirect: '/datacenter/metadata',
-      },
-      {
-        component: './DataCenter/MetaData',
-        path: '/datacenter/metadata',
-        name: 'metadata',
-        icon: 'cluster',
-      },
-    ],
+    component: './DataCenter',
   },
+  // {
+  //   path: '/datacenter',
+  //   name: 'datacenter',
+  //   icon: 'database',
+  //   routes: [
+  //     {
+  //       path: '/datacenter',
+  //       redirect: '/datacenter/metadata',
+  //     },
+  //     {
+  //       component: './DataCenter/MetaData',
+  //       path: '/datacenter/metadata',
+  //       name: 'metadata',
+  //       icon: 'cluster',
+  //     },
+  //   ],
+  // },
 
+  // {
+  //   path: '/clusterInstance',
+  //   name: 'clusterInstance',
+  //   icon: 'code-sandbox',
+  //   component: './RegistrationCenter/ClusterManage/Cluster',
+  // },
+  // {
+  //   path: '/clusterConfiguration',
+  //   name: 'clusterConfiguration',
+  //   icon: 'cluster',
+  //   component: './RegistrationCenter/ClusterManage/ClusterConfiguration',
+  // },
   {
     path: '/registration',
     name: 'registration',
     icon: 'appstore',
-    routes: [
-      {
-        path: '/registration',
-        redirect: '/registration/cluster/clusterInstance',
-      },
-      {
-        path: '/registration/cluster',
-        name: 'cluster',
-        icon: 'cluster',
-        routes: [
-          {
-            path: '/registration/cluster/clusterInstance',
-            name: 'clusterInstance',
-            component: './RegistrationCenter/ClusterManage/Cluster',
-          },
-          {
-            path: '/registration/cluster/clusterConfiguration',
-            name: 'clusterConfiguration',
-            component: './RegistrationCenter/ClusterManage/ClusterConfiguration',
-          },
-        ],
-      },
-      {
-        path: '/registration/jar',
-        name: 'jar',
-        icon: 'code-sandbox',
-        component: './RegistrationCenter/Jar',
-      },
-      {
-        path: '/registration/database',
-        name: 'database',
-        icon: 'database',
-        component: './RegistrationCenter/DataBase',
-      },
-      {
-        path: '/registration/alert',
-        name: 'alert',
-        icon: 'alert',
-        routes: [
-          {
-            path: '/registration/alert/alertInstance',
-            name: 'alertInstance',
-            component: './RegistrationCenter/AlertManage/AlertInstance',
-          },
-          {
-            path: '/registration/alert/alertGroup',
-            name: 'alertGroup',
-            component: './RegistrationCenter/AlertManage/AlertGroup',
-          },
-        ],
-      }, {
-        path: '/registration/document',
-        name: 'document',
-        icon: 'container',
-        component: './RegistrationCenter/Document',
-      },{
-        path: '/registration/fragment',
-        name: 'fragment',
-        icon: "cloud",
-        component: './RegistrationCenter/FragmentVariable',
-      }
-    ],
+    component: './RegistrationCenter/ClusterManage',
   },
-  {
-    name: 'authenticationCenter',
-    icon: 'SafetyCertificateOutlined',
-    path: '/authenticationCenter',
-    access: "canAdmin",
-    routes: [
-      {
-        path: '/authenticationCenter',
-        redirect: '/authenticationCenter/userManager',
-      },
-      {
-        path: '/authenticationCenter/userManager',
-        name: 'userManager',
-        icon: 'UserOutlined',
-        component: './AuthenticationCenter/UserManager',
-      },
-      {
-        path: '/authenticationCenter/roleManager',
-        name: 'roleManager',
-        icon: 'TeamOutlined',
-        component: './AuthenticationCenter/RoleManager',
-      },
-      {
-        path: '/authenticationCenter/roleSelectPermissions',
-        name: 'roleSelectPermissions',
-        icon: 'FundViewOutlined',
-        component: './AuthenticationCenter/RoleSelectPermissions',
-      },
-      {
-        path: '/authenticationCenter/namespaceManager',
-        name: 'namespaceManager',
-        icon: 'BulbOutlined',
-        component: './AuthenticationCenter/NamespaceManager',
-      },
-      {
-        path: '/authenticationCenter/tenantManager',
-        name: 'tenantManager',
-        icon: 'SecurityScanOutlined',
-        component: './AuthenticationCenter/TenantManager',
-      },
-    ],
-  },
+  // {
+  //   path: '/registration',
+  //   name: 'registration',
+  //   icon: 'appstore',
+  //   routes: [
+  //     {
+  //       path: '/registration',
+  //       redirect: '/registration/cluster/clusterInstance',
+  //     },
+  //     {
+  //       path: '/registration/cluster',
+  //       name: 'cluster',
+  //       icon: 'cluster',
+  //       routes: [
+  //         {
+  //           path: '/registration/cluster/clusterInstance',
+  //           name: 'clusterInstance',
+  //           component: './RegistrationCenter/ClusterManage/Cluster',
+  //         },
+  //         {
+  //           path: '/registration/cluster/clusterConfiguration',
+  //           name: 'clusterConfiguration',
+  //           component: './RegistrationCenter/ClusterManage/ClusterConfiguration',
+  //         },
+  //       ],
+  //     },
+  //     {
+  //       path: '/registration/jar',
+  //       name: 'jar',
+  //       icon: 'code-sandbox',
+  //       component: './RegistrationCenter/Jar',
+  //     },
+  //     {
+  //       path: '/registration/database',
+  //       name: 'database',
+  //       icon: 'database',
+  //       component: './RegistrationCenter/DataBase',
+  //     },
+  //     {
+  //       path: '/registration/alert',
+  //       name: 'alert',
+  //       icon: 'alert',
+  //       routes: [
+  //         {
+  //           path: '/registration/alert/alertInstance',
+  //           name: 'alertInstance',
+  //           component: './RegistrationCenter/AlertManage/AlertInstance',
+  //         },
+  //         {
+  //           path: '/registration/alert/alertGroup',
+  //           name: 'alertGroup',
+  //           component: './RegistrationCenter/AlertManage/AlertGroup',
+  //         },
+  //       ],
+  //     }, {
+  //       path: '/registration/document',
+  //       name: 'document',
+  //       icon: 'container',
+  //       component: './RegistrationCenter/Document',
+  //     },{
+  //       path: '/registration/fragment',
+  //       name: 'fragment',
+  //       icon: "cloud",
+  //       component: './RegistrationCenter/FragmentVariable',
+  //     }
+  //   ],
+  // },
+  // {
+  //   name: 'authenticationCenter',
+  //   icon: 'SafetyCertificateOutlined',
+  //   path: '/authenticationCenter',
+  //   access: "canAdmin",
+  //   routes: [
+  //     {
+  //       path: '/authenticationCenter',
+  //       redirect: '/authenticationCenter/userManager',
+  //     },
+  //     {
+  //       path: '/authenticationCenter/userManager',
+  //       name: 'userManager',
+  //       icon: 'UserOutlined',
+  //       component: './AuthenticationCenter/UserManager',
+  //     },
+  //     {
+  //       path: '/authenticationCenter/roleManager',
+  //       name: 'roleManager',
+  //       icon: 'TeamOutlined',
+  //       component: './AuthenticationCenter/RoleManager',
+  //     },
+  //     {
+  //       path: '/authenticationCenter/namespaceManager',
+  //       name: 'namespaceManager',
+  //       icon: 'BulbOutlined',
+  //       component: './AuthenticationCenter/NamespaceManager',
+  //     },
+  //     {
+  //       path: '/authenticationCenter/tenantManager',
+  //       name: 'tenantManager',
+  //       icon: 'SecurityScanOutlined',
+  //       component: './AuthenticationCenter/TenantManager',
+  //     },
+  //   ],
+  // },
   {
     path: '/',
     redirect: '/dataStudio',
   },
-  {
-    name: 'settings',
-    icon: 'setting',
-    path: '/settingCenter',
-    routes: [
-      {
-        path: '/settingCenter',
-        redirect: '/settingCenter/flinkSettings',
-      },
-      {
-        path: '/settingCenter/flinkSettings',
-        name: 'flinkConfig',
-        icon: 'setting',
-        component: './SettingCenter/FlinkSettings',
-      },
-      {
-        path: '/settingCenter/udfTemplate',
-        name: 'udfTemplate',
-        icon: 'setting',
-        component: './SettingCenter/UDFTemplate',
-      },
-      {
-        path: '/settingCenter/systemInfo',
-        name: 'systemInfo',
-        icon: 'desktop',
-        component: './SettingCenter/SystemInfo',
-      },
-      {
-        path: '/settingCenter/processList',
-        name: 'processList',
-        icon: 'desktop',
-        component: './SettingCenter/ProcessList',
-      },
-    ],
-  },
-  {
-    path: '/about',
-    name: 'about',
-    icon: 'smile',
-    component: './Welcome',
-  },
+  // {
+  //   name: 'settings',
+  //   icon: 'setting',
+  //   path: '/settingCenter',
+  //   routes: [
+  //     {
+  //       path: '/settingCenter',
+  //       redirect: '/settingCenter/flinkSettings',
+  //     },
+  //     {
+  //       path: '/settingCenter/flinkSettings',
+  //       name: 'flinkConfig',
+  //       icon: 'setting',
+  //       component: './SettingCenter/FlinkSettings',
+  //     },
+  //     {
+  //       path: '/settingCenter/udfTemplate',
+  //       name: 'udfTemplate',
+  //       icon: 'setting',
+  //       component: './SettingCenter/UDFTemplate',
+  //     },
+  //     {
+  //       path: '/settingCenter/systemInfo',
+  //       name: 'systemInfo',
+  //       icon: 'desktop',
+  //       component: './SettingCenter/SystemInfo',
+  //     },
+  //     {
+  //       path: '/settingCenter/processList',
+  //       name: 'processList',
+  //       icon: 'desktop',
+  //       component: './SettingCenter/ProcessList',
+  //     },
+  //   ],
+  // },
+  // {
+  //   path: '/about',
+  //   name: 'about',
+  //   icon: 'smile',
+  //   component: './Welcome',
+  // },
   {
     component: './404',
   },

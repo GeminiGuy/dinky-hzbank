@@ -22,7 +22,7 @@ import {Button, message, Modal} from 'antd';
 import React, {useEffect, useState} from 'react';
 import ProForm, {ProFormCheckbox, ProFormText} from '@ant-design/pro-form';
 import {history, Link, SelectLang, useModel} from 'umi';
-import Footer from '@/components/Footer';
+// import Footer from '@/components/Footer';
 import {login} from '@/services/ant-design-pro/api';
 import {CheckCard} from '@ant-design/pro-components';
 import styles from './index.less';
@@ -32,6 +32,9 @@ import {l} from "@/utils/intl";
 import cookies from "js-cookie";
 import {setLocale} from "@@/plugin-locale/localeExports";
 
+// const isDev = process.env.NODE_ENV === 'development';
+// // TODO: 生产环境地址未明确(后面的*)
+// const parentPath: string = isDev ? '*' : '*'
 
 /** 此方法会跳转到 redirect 参数所在的位置 */
 const goto = () => {
@@ -66,6 +69,42 @@ const Login: React.FC = () => {
     }
   };
 
+  // const whitelistFreeLogin = async (values: API.LoginParams) => {
+  //   try {
+  //     // 登录
+  //     const msg = await login({...values, type});
+  //     if (msg.code === 0 && msg.datas != undefined) {
+  //       await fetchUserInfo();
+  //       history.push('/');
+  //       return;
+  //     } else {
+  //       message.error(l(msg.msg, msg.msg));
+  //     }
+  //   } catch (error) {
+  //     message.error(l('pages.login.failure'));
+  //   }
+  // }
+
+  // // iframe接收父消息回调
+  // const iframeMessageCallback = (e: any) => {  
+  //   // if (!e.origin.startsWith(parentPath) || !e.data.isWhitelist) return;
+  //   if (e.source != window.parent || !e.data.isWhitelist) return;
+  //   const userParams = {
+  //     autoLogin: true,
+  //     username: e.data.username,
+  //     password: e.data.password,
+  //   }
+  //   whitelistFreeLogin(userParams)
+  // }
+
+  // useEffect(() => {
+  //   // iframe接收父消息
+  //   window.addEventListener('message', iframeMessageCallback, false);
+  //   window.parent.postMessage(true, parentPath);
+  //   return () => {
+  //     window.removeEventListener('message', iframeMessageCallback)
+  //   }
+  // }, [])
 
   useEffect(() => {
     // 调用接口
@@ -283,7 +322,7 @@ const Login: React.FC = () => {
           </ProForm>
         </div>
       </div>
-      <Footer/>
+      {/* <Footer/> */}
       {handleShowTenant()}
     </div>
 

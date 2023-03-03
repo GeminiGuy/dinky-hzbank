@@ -655,7 +655,7 @@ const StudioMenu = (props: any) => {
                   />
                 </Tooltip>
               </>)}
-              {isShowSubmitBtn() && (<>
+              {/* {isShowSubmitBtn() && (<>
                 <Tooltip title={l('pages.datastudio.editor.push.ds')}>
                   <Button
                     type="text" style={{color: '#248FFF'}}
@@ -663,7 +663,7 @@ const StudioMenu = (props: any) => {
                     onClick={viewDolphinCon}
                   />
                 </Tooltip>
-              </>)}
+              </>)} */}
               {isShowCancelTaskBtn() &&
                 <Tooltip title={l('pages.datastudio.editor.stop')}>
                   <Button
@@ -730,20 +730,22 @@ const StudioMenu = (props: any) => {
                   onClick={showAPI}
                 />
               </Tooltip>
-              <Tooltip title={l('pages.datastudio.editor.help')}>
+              {/* <Tooltip title={l('pages.datastudio.editor.help')}>
                 <Button
                   type="text"
                   icon={<QuestionCircleTwoTone/>}
                   onClick={showHelp}
                 />
-              </Tooltip>
-            </Col> : <Col span={8}><Tooltip title={l('pages.datastudio.editor.help')}>
-              <Button
-                type="text"
-                icon={<QuestionCircleTwoTone/>}
-                onClick={showHelp}
-              />
-            </Tooltip></Col>}
+              </Tooltip> */}
+            </Col> : <Col span={8}>
+              {/* <Tooltip title={l('pages.datastudio.editor.help')}>
+                <Button
+                  type="text"
+                  icon={<QuestionCircleTwoTone/>}
+                  onClick={showHelp}
+                />
+              </Tooltip> */}
+            </Col>}
         </Row>
       </Col>
       <StudioExplain

@@ -107,6 +107,7 @@ import com.dlink.service.TaskService;
 import com.dlink.service.TaskVersionService;
 import com.dlink.service.UDFService;
 import com.dlink.service.UDFTemplateService;
+import com.dlink.utils.DesensitizeUtils;
 import com.dlink.service.UserService;
 import com.dlink.utils.DockerClientUtils;
 import com.dlink.utils.JSONUtil;
@@ -344,7 +345,7 @@ public class TaskServiceImpl extends SuperServiceImpl<TaskMapper, Task> implemen
                 result.setEndTime(LocalDateTime.now());
                 return result;
             }
-            Driver driver = Driver.build(dataBase.getDriverConfig());
+            Driver driver = Driver.build(dataBase.buildDriverConfig());
             JdbcSelectResult selectResult = driver.executeSql(sqlDTO.getStatement(), sqlDTO.getMaxRowNum());
             driver.close();
             result.setResult(selectResult);
@@ -394,7 +395,7 @@ public class TaskServiceImpl extends SuperServiceImpl<TaskMapper, Task> implemen
                     }
                 };
             }
-            Driver driver = Driver.build(dataBase.getDriverConfig());
+            Driver driver = Driver.build(dataBase.buildDriverConfig());
             List<SqlExplainResult> sqlExplainResults = driver.explain(task.getStatement());
             driver.close();
             return sqlExplainResults;
@@ -403,6 +404,35 @@ public class TaskServiceImpl extends SuperServiceImpl<TaskMapper, Task> implemen
 
     @Override
     public Task getTaskInfoById(Integer id) {
+        Task task = this.getById(id);
+        if (task != null) {
+            task.parseConfig();
+            Statement statement = statementService.getById(id);
+            if (task.getClusterId() != null) {
+                Cluster cluster = clusterService.getById(task.getClusterId());
+                if (cluster != null) {
+                    task.setClusterName(cluster.getAlias());
+                }
+            }
+            if (statement != null) {
+                task.setOriginalStatement(statement.getStatement());
+
+                // 对脱敏的数据进行还原处理
+                String originalData = DesensitizeUtils.replaceEncryptStr(statement.getStatement());
+                task.setStatement(originalData);
+            }
+            JobInstance jobInstance = jobInstanceService.getJobInstanceByTaskId(id);
+            if (Asserts.isNotNull(jobInstance) && !JobStatus.isDone(jobInstance.getStatus())) {
+                task.setJobInstanceId(jobInstance.getId());
+            } else {
+                task.setJobInstanceId(0);
+            }
+        }
+        return task;
+    }
+
+    @Override
+    public Task getOriginalTaskInfoById(Integer id) {
         Task task = this.getById(id);
         if (task != null) {
             task.parseConfig();
@@ -598,7 +628,7 @@ public class TaskServiceImpl extends SuperServiceImpl<TaskMapper, Task> implemen
 
     @Override
     public String exportSql(Integer id) {
-        Task task = getTaskInfoById(id);
+        Task task = getOriginalTaskInfoById(id);
         Asserts.checkNull(task, Tips.TASK_NOT_EXIST);
         if (Dialect.notFlinkSql(task.getDialect())) {
             return task.getStatement();
@@ -634,7 +664,6 @@ public class TaskServiceImpl extends SuperServiceImpl<TaskMapper, Task> implemen
 
     @Override
     public Result releaseTask(Integer id) {
-
         Task task = getTaskInfoById(id);
         Assert.check(task);
         if (JobLifeCycle.DEVELOP.equalsValue(task.getStep())) {
@@ -647,6 +676,7 @@ public class TaskServiceImpl extends SuperServiceImpl<TaskMapper, Task> implemen
                     }
                 }
             }
+            task = getOriginalTaskInfoById(id);// 保留原始配置
             task.setStep(JobLifeCycle.RELEASE.getValue());
             Task newTask = createTaskVersionSnapshot(task);
             if (updateById(newTask)) {

@@ -18,7 +18,7 @@
  */
 
 
-import {Dropdown, Menu, message, Tabs} from 'antd';
+import {Dropdown, Menu, message, Tabs, Empty} from 'antd';
 import React from 'react';
 import {connect} from 'umi';
 import {StateType} from '@/pages/DataStudio/model';
@@ -150,8 +150,9 @@ const EditorTabs = (props: any) => {
 
   return (
     <>
+      {/* {tabs.panes.length === 0 ? <Empty image={Empty.PRESENTED_IMAGE_SIMPLE}/> : */}
       {tabs.panes.length === 0 ? <StudioHome width={width}/> :
-        <Tabs
+      <Tabs
           hideAdd
           type="editable-card"
           size="small"

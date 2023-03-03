@@ -35,49 +35,22 @@ const StudioHome = (props: any) => {
   return (
     <Scrollbars style={{height: toolHeight}}>
       <Typography style={{padding: '15px'}}>
-        <Title level={4}>{l('pages.datastudio.label.welcomeuse', '', {version: VERSION})}</Title>
+        <Title level={4}>欢迎使用采集分发子系统</Title>
+        <Title level={5}>产品介绍</Title>
         <Paragraph>
-          <blockquote>{l('pages.datastudio.label.dinkydescribe')}</blockquote>
+          采集分发子系统基于开源产品dinky进行二次开发，以Apache Flink为基础，将Flink CDC作为数据采集的核心工具，提供CDC开发与调试、任务运维管理、元数据注册管理、Flink集群管理等服务能力，致力于全行实时数仓建设的探索与实践。
         </Paragraph>
-        <Title level={5}>{l('shortcut.title')}</Title>
+        <Title level={5}>功能介绍</Title>
         <Paragraph>
-          <Text keyboard>Ctrl + s</Text> {l('shortcut.key.save')} <Divider type="vertical"/>
-          <Text keyboard>Alt + 2</Text> {l('shortcut.key.check')} <Divider type="vertical"/>
-          <Text keyboard>Alt + 3</Text> {l('shortcut.key.beautify')} <Divider type="vertical"/>
-          <Text keyboard>F2</Text> {l('shortcut.key.fullscreen')} <Divider type="vertical"/>
-          <Text keyboard>Esc</Text> {l('shortcut.key.fullscreenClose')} <Divider type="vertical"/>
-          <Text keyboard>F1</Text> {l('shortcut.key.more')}
-        </Paragraph>
-        <Paragraph>
-          <Text keyboard>Ctrl + F</Text> {l('shortcut.key.search')} <Divider type="vertical"/>
-          <Text keyboard>Ctrl + H</Text> {l('shortcut.key.replace')} <Divider type="vertical"/>
-          <Text keyboard>Ctrl + Z</Text> {l('shortcut.key.revoke')} <Divider type="vertical"/>
-          <Text keyboard>Ctrl + Y</Text> {l('shortcut.key.redo')} <Divider type="vertical"/>
-          <Text keyboard>Ctrl + /</Text> {l('shortcut.key.notes')}
-        </Paragraph>
-        <Paragraph>
-          <Text keyboard>{l('shortcut.key.checked')} + Tab</Text> {l('shortcut.key.indent')} <Divider type="vertical"/>
-          <Text keyboard>{l('shortcut.key.checked')} + Shift + Tab</Text> {l('shortcut.key.removeIndent')} <Divider
-          type="vertical"/>
-          <Text keyboard>Shift + Alt + Right</Text> {l('shortcut.key.selectToEnd')} <Divider type="vertical"/>
-          <Text keyboard>Shift + Alt + F</Text> {l('shortcut.key.format')}
-        </Paragraph>
-        <Paragraph>
-          <Text keyboard>Ctrl + Shift + Up/Down</Text> {l('shortcut.key.editMultiline')} <Divider type="vertical"/>
-          <Text keyboard>Shift + Alt + Up/Down</Text> {l('shortcut.key.copyRow')} <Divider type="vertical"/>
-          <Text keyboard>Ctrl + Shift + K</Text> {l('shortcut.key.deleteRow')}
-        </Paragraph>
-        <Paragraph>
-          <Text keyboard>Ctrl + F3</Text> {l('shortcut.key.matchNext')} <Divider type="vertical"/>
-          <Text keyboard>Ctrl + Shift + F3</Text> {l('shortcut.key.matchPrevious')} <Divider type="vertical"/>
-          <Text keyboard>F7</Text> {l('shortcut.key.goNextHighlight')} <Divider type="vertical"/>
-          <Text keyboard>Shift +F7</Text> {l('shortcut.key.goPreviousHighlight')}
-        </Paragraph>
-        <Paragraph>
-          <Text keyboard>Ctrl + Shift + End</Text> {l('shortcut.key.appendLineBefore')} <Divider type="vertical"/>
-          <Text keyboard>Ctrl + End</Text> {l('shortcut.key.appendLine')} <Divider type="vertical"/>
-          <Text keyboard>Alt + Up/Down</Text> {l('shortcut.key.transpositionUpAndDown')} <Divider type="vertical"/>
-          <Text keyboard>Ctrl + Shift + [/]</Text> {l('shortcut.key.collapseOrExpand')}
+          <ul>
+            <li>支持多种数据采集开发模式：支持FlinkSQL CDC、流水线配置化（计划中）两种方式进行数据采集任务开发</li>
+            <li>沉浸式 FlinkSQL 数据开发：自动提示补全、语法高亮、语句美化、在线调试、语法校验等功能</li>
+            <li>支持FlinkSQL多版本开发及多种执行模式：Local、Standalone、Yarn Session、Yarn Per-Job、Yarn Application</li>
+            <li>支持 Flink Catalog、数据源元数据在线查询及管理</li>
+            <li>支持自动托管的 SavePoint/CheckPoint 恢复及触发机制：最近一次、最早一次、指定一次等</li>
+            <li>支持实时任务运维：上线下线、作业信息、集群信息、作业快照、异常信息、历史版本等</li>
+            <li>支持Flink实例和集群资源管理：提供集群实例、集群配置的注册、心跳检查、资源回收、yarn集群管理等能力</li>
+          </ul>
         </Paragraph>
       </Typography>
     </Scrollbars>

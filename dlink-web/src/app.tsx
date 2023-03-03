@@ -23,14 +23,19 @@ import {PageLoading} from '@ant-design/pro-layout';
 import {notification} from 'antd';
 import type {RequestConfig, RunTimeLayoutConfig} from 'umi';
 import {getIntl, getLocale, history, Link} from 'umi';
-import RightContent from '@/components/RightContent';
-import Footer from '@/components/Footer';
+// import RightContent from '@/components/RightContent';
+// import Footer from '@/components/Footer';
 import type {ResponseError} from 'umi-request';
 import {currentUser as queryCurrentUser} from './services/ant-design-pro/api';
 import {BookOutlined, LinkOutlined} from '@ant-design/icons';
+import {login} from '@/services/ant-design-pro/api';
+// import {message} from 'antd';
+import {decryptDES} from '@/utils/des'
+// import {l} from "@/utils/intl";
 
 const isDev = process.env.NODE_ENV === 'development';
 const loginPath = '/user/login';
+
 
 /** 获取用户信息比较慢的时候会展示一个 loading */
 export const initialStateConfig = {
@@ -73,7 +78,26 @@ export async function getInitialState(): Promise<{
   };
   // 如果是登录页面，不执行
   if (history.location.pathname !== loginPath) {
-    const currentUser = await fetchUserInfo();
+    const {query} = history.location;
+    let currentUser
+    if (query && query.u && query.p) {
+      const userParams = {
+        autoLogin: true,
+        username: query.u.toString(),
+        password: decryptDES(query.p.toString()),
+      }
+      try {
+        // 登录
+        const msg = await login({...userParams, type: 'password'});
+        if (msg.code === 0 && msg.datas != undefined) {
+          currentUser = await fetchUserInfo();
+        }
+      } catch (error) {
+        history.push(loginPath);
+      }
+    } else {
+      currentUser = await fetchUserInfo();
+    }
     return {
       fetchUserInfo,
       currentUser,
@@ -142,14 +166,14 @@ export const request: RequestConfig = {
 // ProLayout 支持的api https://procomponents.ant.design/components/layout
 export const layout: RunTimeLayoutConfig = ({initialState}) => {
 
-
   return {
-    rightContentRender: () => <RightContent/>,
+    // rightContentRender: () => <RightContent/>,
+    rightContentRender: () => {},
     disableContentMargin: false,
     /*waterMarkProps: {
       content: initialState?.currentUser?.name,
     },*/
-    footerRender: () => <Footer/>,
+    // footerRender: () => <Footer/>,
     onPageChange: () => {
       const {location} = history;
       // 如果没有登录，重定向到 login

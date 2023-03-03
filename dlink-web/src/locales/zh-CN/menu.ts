@@ -34,9 +34,12 @@ export default {
   'menu.datacenter': '元数据中心',
   'menu.datacenter.metadata': '元数据',
 
-  'menu.registration': '注册中心',
+  // 'menu.registration': '注册中心',
+  'menu.registration': '集群中心',
   'menu.registration.cluster': '集群管理',
+  'menu.clusterInstance': 'Flink 实例管理',
   'menu.registration.cluster.clusterInstance': 'Flink 实例管理',
+  'menu.clusterConfiguration': '集群配置管理',
   'menu.registration.cluster.clusterConfiguration': '集群配置管理',
   'menu.registration.jar': 'Jar 管理',
   'menu.registration.database': '数据源管理',

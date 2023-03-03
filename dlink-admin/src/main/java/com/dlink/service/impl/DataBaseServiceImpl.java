@@ -55,7 +55,7 @@ public class DataBaseServiceImpl extends SuperServiceImpl<DataBaseMapper, DataBa
 
     @Override
     public String testConnect(DataBase dataBase) {
-        return Driver.buildUnconnected(dataBase.getDriverConfig()).test();
+        return Driver.buildUnconnected(dataBase.buildDriverConfig()).test();
     }
 
     @Override
@@ -65,7 +65,7 @@ public class DataBaseServiceImpl extends SuperServiceImpl<DataBaseMapper, DataBa
         try {
             isHealthy = Asserts.isEquals(
                     CommonConstant.HEALTHY,
-                    Driver.buildUnconnected(dataBase.getDriverConfig()).test());
+                    Driver.buildUnconnected(dataBase.buildDriverConfig()).test());
             if (isHealthy) {
                 dataBase.setHealthTime(LocalDateTime.now());
             }
@@ -117,7 +117,7 @@ public class DataBaseServiceImpl extends SuperServiceImpl<DataBaseMapper, DataBa
     public List<Schema> getSchemasAndTables(Integer id) {
         DataBase dataBase = getById(id);
         Asserts.checkNotNull(dataBase, "该数据源不存在！");
-        Driver driver = Driver.build(dataBase.getDriverConfig());
+        Driver driver = Driver.build(dataBase.buildDriverConfig());
         List<Schema> schemasAndTables = driver.getSchemasAndTables();
         driver.close();
         return schemasAndTables;
@@ -127,7 +127,7 @@ public class DataBaseServiceImpl extends SuperServiceImpl<DataBaseMapper, DataBa
     public List<Column> listColumns(Integer id, String schemaName, String tableName) {
         DataBase dataBase = getById(id);
         Asserts.checkNotNull(dataBase, "该数据源不存在！");
-        Driver driver = Driver.build(dataBase.getDriverConfig());
+        Driver driver = Driver.build(dataBase.buildDriverConfig());
         List<Column> columns = driver.listColumns(schemaName, tableName);
         driver.close();
         return columns;
@@ -137,7 +137,7 @@ public class DataBaseServiceImpl extends SuperServiceImpl<DataBaseMapper, DataBa
     public String getFlinkTableSql(Integer id, String schemaName, String tableName) {
         DataBase dataBase = getById(id);
         Asserts.checkNotNull(dataBase, "该数据源不存在！");
-        Driver driver = Driver.build(dataBase.getDriverConfig());
+        Driver driver = Driver.build(dataBase.buildDriverConfig());
         List<Column> columns = driver.listColumns(schemaName, tableName);
         Table table = Table.build(tableName, schemaName, columns);
         return table.getFlinkTableSql(dataBase.getName(), dataBase.getFlinkTemplate());
@@ -147,7 +147,7 @@ public class DataBaseServiceImpl extends SuperServiceImpl<DataBaseMapper, DataBa
     public String getSqlSelect(Integer id, String schemaName, String tableName) {
         DataBase dataBase = getById(id);
         Asserts.checkNotNull(dataBase, "该数据源不存在！");
-        Driver driver = Driver.build(dataBase.getDriverConfig());
+        Driver driver = Driver.build(dataBase.buildDriverConfig());
         List<Column> columns = driver.listColumns(schemaName, tableName);
         Table table = Table.build(tableName, schemaName, columns);
         return driver.getSqlSelect(table);
@@ -157,7 +157,7 @@ public class DataBaseServiceImpl extends SuperServiceImpl<DataBaseMapper, DataBa
     public String getSqlCreate(Integer id, String schemaName, String tableName) {
         DataBase dataBase = getById(id);
         Asserts.checkNotNull(dataBase, "该数据源不存在！");
-        Driver driver = Driver.build(dataBase.getDriverConfig());
+        Driver driver = Driver.build(dataBase.buildDriverConfig());
         List<Column> columns = driver.listColumns(schemaName, tableName);
         Table table = Table.build(tableName, schemaName, columns);
         return driver.getCreateTableSql(table);
@@ -167,7 +167,7 @@ public class DataBaseServiceImpl extends SuperServiceImpl<DataBaseMapper, DataBa
     public JdbcSelectResult queryData(QueryData queryData) {
         DataBase dataBase = getById(queryData.getId());
         Asserts.checkNotNull(dataBase, "该数据源不存在！");
-        Driver driver = Driver.build(dataBase.getDriverConfig());
+        Driver driver = Driver.build(dataBase.buildDriverConfig());
         StringBuilder queryOption = driver.genQueryOption(queryData);
         return driver.query(queryOption.toString(), null);
     }
@@ -176,7 +176,7 @@ public class DataBaseServiceImpl extends SuperServiceImpl<DataBaseMapper, DataBa
     public JdbcSelectResult execSql(QueryData queryData) {
         DataBase dataBase = getById(queryData.getId());
         Asserts.checkNotNull(dataBase, "该数据源不存在！");
-        Driver driver = Driver.build(dataBase.getDriverConfig());
+        Driver driver = Driver.build(dataBase.buildDriverConfig());
         long startTime = System.currentTimeMillis();
         JdbcSelectResult jdbcSelectResult = driver.query(queryData.getSql(), 500);
         long endTime = System.currentTimeMillis();
@@ -189,7 +189,7 @@ public class DataBaseServiceImpl extends SuperServiceImpl<DataBaseMapper, DataBa
     public SqlGeneration getSqlGeneration(Integer id, String schemaName, String tableName) {
         DataBase dataBase = getById(id);
         Asserts.checkNotNull(dataBase, "该数据源不存在！");
-        Driver driver = Driver.build(dataBase.getDriverConfig());
+        Driver driver = Driver.build(dataBase.buildDriverConfig());
         Table table = driver.getTable(schemaName, tableName);
         SqlGeneration sqlGeneration = new SqlGeneration();
         sqlGeneration.setFlinkSqlCreate(table.getFlinkTableSql(dataBase.getName(), dataBase.getFlinkTemplate()));

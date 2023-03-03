@@ -616,10 +616,10 @@ public class TaskServiceImpl extends SuperServiceImpl<TaskMapper, Task> implemen
             }
             if (task.getDialect().equalsIgnoreCase("doris")) {
                 return com.dlink.explainer.sqllineage.LineageBuilder.getSqlLineage(task.getStatement(), "mysql",
-                        dataBase.getDriverConfig());
+                        dataBase.buildDriverConfig());
             } else {
                 return com.dlink.explainer.sqllineage.LineageBuilder.getSqlLineage(task.getStatement(),
-                        task.getDialect().toLowerCase(), dataBase.getDriverConfig());
+                        task.getDialect().toLowerCase(), dataBase.buildDriverConfig());
             }
         } else {
             return LineageBuilder.getColumnLineageByLogicalPlan(buildFlinkSQL(task));

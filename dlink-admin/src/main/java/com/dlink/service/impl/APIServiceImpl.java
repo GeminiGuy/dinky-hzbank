@@ -31,6 +31,7 @@ import com.dlink.job.JobResult;
 import com.dlink.result.APIJobResult;
 import com.dlink.result.ExplainResult;
 import com.dlink.service.APIService;
+import com.dlink.utils.DesensitizeUtils;
 import com.dlink.utils.RunTimeUtil;
 
 import org.springframework.stereotype.Service;
@@ -52,7 +53,11 @@ public class APIServiceImpl implements APIService {
     public APIJobResult executeSql(APIExecuteSqlDTO apiExecuteSqlDTO) {
         JobConfig config = apiExecuteSqlDTO.getJobConfig();
         JobManager jobManager = JobManager.build(config);
-        JobResult jobResult = jobManager.executeSql(apiExecuteSqlDTO.getStatement());
+
+        // 对脱敏的数据进行还原处理
+        String originalStatement = DesensitizeUtils.replaceEncryptStr(apiExecuteSqlDTO.getStatement());
+
+        JobResult jobResult = jobManager.executeSql(originalStatement);
         APIJobResult apiJobResult = APIJobResult.build(jobResult);
         RunTimeUtil.recovery(jobManager);
         return apiJobResult;

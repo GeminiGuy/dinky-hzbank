@@ -67,6 +67,7 @@ import com.dlink.session.SessionConfig;
 import com.dlink.session.SessionInfo;
 import com.dlink.session.SessionPool;
 import com.dlink.sql.FlinkQuery;
+import com.dlink.utils.DesensitizeUtils;
 import com.dlink.utils.RunTimeUtil;
 
 import java.util.ArrayList;
@@ -180,6 +181,11 @@ public class StudioServiceImpl implements StudioService {
 
     @Override
     public JobResult executeSql(StudioExecuteDTO studioExecuteDTO) {
+
+        // 对脱敏的数据进行还原处理
+        String originalStatement = DesensitizeUtils.replaceEncryptStr(studioExecuteDTO.getStatement());
+        studioExecuteDTO.setStatement(originalStatement);
+
         if (Dialect.notFlinkSql(studioExecuteDTO.getDialect())) {
             return executeCommonSql(SqlDTO.build(
                     studioExecuteDTO.getStatement(),

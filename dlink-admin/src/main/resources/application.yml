@@ -1,11 +1,11 @@
 spring:
   datasource:
-    url: jdbc:mysql://185.185.185.178:3306/dinky?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&useSSL=false&zeroDateTimeBehavior=convertToNull&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
-    username: dinky
-    password: dinky
+    url: jdbc:mysql://127.0.0.1:3306/applecandy?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&useSSL=false&zeroDateTimeBehavior=convertToNull&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
+    username: applecandy
+    password: applecandy
     driver-class-name: com.mysql.cj.jdbc.Driver
   application:
-    name: dlink
+    name: jianyanjianxin
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher
